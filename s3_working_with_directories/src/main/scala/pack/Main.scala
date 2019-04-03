@@ -98,7 +98,7 @@ object Main {
   }
 
   def doesPathExist(s3client: AmazonS3, bucketName: String, prefix: String): Boolean = {
-    s3client.listObjects(bucketName, "testFolder")
+    s3client.listObjects(bucketName, prefix)
       .getObjectSummaries.size() > 0
   }
 
