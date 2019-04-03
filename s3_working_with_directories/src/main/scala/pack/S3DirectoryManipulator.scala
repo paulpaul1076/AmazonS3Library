@@ -5,6 +5,9 @@ import java.io.ByteArrayInputStream
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.{CopyObjectResult, ListObjectsRequest, ObjectListing, ObjectMetadata, PutObjectRequest, S3ObjectSummary}
 
+/**
+ * Utilities for manipulating directories in s3.
+ */
 object S3DirectoryManipulator {
   /**
    * Create folder.
