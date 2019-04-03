@@ -64,11 +64,10 @@ object Main {
 //    println(df.count())
   }
 
-  def getCurrentDate: String = {
-    val dtf = DateTimeFormatter.ofPattern("yyyyMMdd")
-
-    LocalDateTime.now.format(dtf)
-  }
+//  def getCurrentDate: String = {
+//    val dtf = DateTimeFormatter.ofPattern("yyyyMMdd")
+//    LocalDateTime.now.format(dtf)
+//  }
 
   def createFolder(s3client: AmazonS3, bucketName: String, folderName: String): Unit = { // create meta-data for your folder and set content-length to 0
     val metadata = new ObjectMetadata
