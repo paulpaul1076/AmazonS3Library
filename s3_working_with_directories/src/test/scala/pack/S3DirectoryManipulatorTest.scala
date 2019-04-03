@@ -32,9 +32,6 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
 
   @After
   def tearDown(): Unit = {
-//    S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder1")
-//    S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder2")
-//    S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder3")
     client.deleteBucket(bucketName)
     api.shutdown
   }
@@ -42,33 +39,49 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
   @Test
   def createFolder(): Unit = {
     val folderName = "folder1"
-    val isBucketEmptyInitially = client.listObjects(bucketName, folderName).getObjectSummaries.isEmpty
-    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
-    val exists = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
+    val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
-    Assert.assertTrue(isBucketEmptyInitially && exists)
+    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
+    val doesFolderExistInTheEnd = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
+
+    Assert.assertTrue(!doesFolderExistInitially && doesFolderExistInTheEnd)
   }
 
   @Test
   def deletePathsWithPrefix(): Unit = {
-    //S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder1")
-    //S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder2")
-    //S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, "folder3")
-    val folderName = "folder3"
-    val isBucketEmptyInitially = client.listObjects(bucketName, folderName).getObjectSummaries.isEmpty
-    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
-    val exists = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
-    //S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, folderName)
-    //val existsAfterDeletion = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
+    val folderName = "folder2"
 
-    Assert.assertTrue(isBucketEmptyInitially && exists /*&& !existsAfterDeletion*/)
+    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
+    val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
+
+    S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, folderName)
+    val doesFolderExistAfterDeletion = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
+
+    Assert.assertTrue(doesFolderExistInitially && !doesFolderExistAfterDeletion)
   }
 
   @Test
   def renamePathsWithPrefix(): Unit = {
-    val oldName = "folder2"
-    val newName = "folder3"
+    val oldName = "folder3"
+    val newName = "folder4"
+
+    S3DirectoryManipulator.createFolder(client, bucketName, oldName + "/")
+    val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, oldName)
+
     S3DirectoryManipulator.renamePathsWithPrefix(client, bucketName, oldName, newName)
-    val exists = client.listObjects(bucketName, newName).getObjectSummaries.size() > 0
+    val didItGetRenamed =
+      !S3DirectoryManipulator.doesPathExist(client, bucketName, oldName) &&
+        S3DirectoryManipulator.doesPathExist(client, bucketName, newName)
+
+    Assert.assertTrue(!doesFolderExistInitially && didItGetRenamed)
+  }
+
+  @Test
+  def doesPathExist(): Unit = {
+    val folderName = "folder5"
+    S3DirectoryManipulator.createFolder(client, bucketName, folderName)
+    val doesPathExist1 = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
+    val doesPathExist2 = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
+    Assert.assertEquals(doesPathExist1, doesPathExist2)
   }
 }
