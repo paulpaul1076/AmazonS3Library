@@ -18,9 +18,9 @@ import scala.util.control.Breaks
 
 object Main {
 
-  val accessKey = "AKIA3KF7TQHCOVO6F63P"
-  val secretKey = "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"
-  val bucketName = "pavel.orekhov.testing.bucket"
+  val accessKey = "***"
+  val secretKey = "***"
+  val bucketName = "***"
 
   def main(args: Array[String]): Unit = {
 
