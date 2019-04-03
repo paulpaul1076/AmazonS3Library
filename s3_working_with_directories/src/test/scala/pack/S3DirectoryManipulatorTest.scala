@@ -1,18 +1,11 @@
 package pack
 
-import java.util.Objects
-
 import com.amazonaws.auth.{AWSStaticCredentialsProvider, AnonymousAWSCredentials}
-import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
-import com.amazonaws.services.s3.model.{ListObjectsRequest, S3ObjectSummary}
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3ClientBuilder}
 import io.findify.s3mock.S3Mock
 import org.junit.{After, Assert, Before, Test}
 import org.scalatest.junit.JUnitSuite
-
-import scala.collection.JavaConverters._
-import scala.util.control.Breaks
 
 class S3DirectoryManipulatorTest extends JUnitSuite {
 
