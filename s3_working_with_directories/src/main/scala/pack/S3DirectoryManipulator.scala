@@ -19,6 +19,7 @@ object S3DirectoryManipulator {
     val folderRegex = "(.+/)+"
     if (!folderName.matches(folderRegex))
       throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \"(.+/)+\"")
+
     val metadata = new ObjectMetadata
     metadata.setContentLength(0)
     val emptyContent = new ByteArrayInputStream(new Array[Byte](0))
