@@ -107,7 +107,7 @@ object Main {
   }
 
   /**
-   * Emulates folder deletion, if prefix is name to folder (sort of like full path).
+   * Emulates folder deletion, if prefix is name of folder (sort of like full path).
    *
    * @param s3client   s3 client.
    * @param bucketName bucket name.
