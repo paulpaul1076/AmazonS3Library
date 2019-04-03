@@ -37,7 +37,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
   }
 
   @Test
-  def createFolder(): Unit = {
+  def createFolderIfNotExists(): Unit = {
     val folderName = "folder1"
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
