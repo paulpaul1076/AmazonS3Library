@@ -16,6 +16,9 @@ object S3DirectoryManipulator {
    * @param folderName name of folder.
    */
   def createFolder(s3client: AmazonS3, bucketName: String, folderName: String): Unit = {
+    val folderRegex = "(.+/)+"
+    if (!folderName.matches(folderRegex))
+      throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \"(.+/)+\"")
     val metadata = new ObjectMetadata
     metadata.setContentLength(0)
     val emptyContent = new ByteArrayInputStream(new Array[Byte](0))
