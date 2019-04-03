@@ -15,15 +15,18 @@ object S3DirectoryManipulator {
    * @param bucketName bucket name.
    * @param folderName name of folder.
    */
-  def createFolder(s3client: AmazonS3, bucketName: String, folderName: String): Unit = {
-    val folderRegex = "(.+/)+"
+  def createFolderIfNotExists(s3client: AmazonS3, bucketName: String, folderName: String): Unit = {
+    val folderRegex = ".+(/.+)+"
     if (!folderName.matches(folderRegex))
-      throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \"(.+/)+\"")
+      throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \".+(/.+)+\"")
+
+    if (doesPathExist(s3client, bucketName, folderName)) return
 
     val metadata = new ObjectMetadata
     metadata.setContentLength(0)
     val emptyContent = new ByteArrayInputStream(new Array[Byte](0))
-    val putObjectRequest = new PutObjectRequest(bucketName, folderName, emptyContent, metadata)
+    val suffix = "/"
+    val putObjectRequest = new PutObjectRequest(bucketName, folderName + suffix, emptyContent, metadata)
     s3client.putObject(putObjectRequest)
   }
 

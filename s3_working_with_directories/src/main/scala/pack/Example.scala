@@ -55,7 +55,7 @@ object Example {
 
 
     if (!S3DirectoryManipulator.doesPathExist(s3Client, bucketName, "output")) {
-      S3DirectoryManipulator.createFolder(s3Client, bucketName, "output/")
+      S3DirectoryManipulator.createFolderIfNotExists(s3Client, bucketName, "output/")
     }
 
     //renamePathsWithPrefix(s3client, bucketName, "testFolder", "tmp")

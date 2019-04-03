@@ -41,7 +41,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
     val folderName = "folder1"
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
-    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName + "/")
     val doesFolderExistInTheEnd = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
     Assert.assertTrue(!doesFolderExistInitially && doesFolderExistInTheEnd)
@@ -51,7 +51,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
   def deletePathsWithPrefix(): Unit = {
     val folderName = "folder2"
 
-    S3DirectoryManipulator.createFolder(client, bucketName, folderName + "/")
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName + "/")
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
     S3DirectoryManipulator.deletePathsWithPrefix(client, bucketName, folderName)
@@ -65,7 +65,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
     val oldName = "folder3"
     val newName = "folder4"
 
-    S3DirectoryManipulator.createFolder(client, bucketName, oldName + "/")
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, oldName + "/")
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, oldName)
 
     S3DirectoryManipulator.renamePathsWithPrefix(client, bucketName, oldName, newName)
@@ -79,7 +79,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
   @Test
   def doesPathExist(): Unit = {
     val folderName = "folder5"
-    S3DirectoryManipulator.createFolder(client, bucketName, folderName)
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName)
     val doesPathExist1 = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
     val doesPathExist2 = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
     Assert.assertEquals(doesPathExist1, doesPathExist2)
