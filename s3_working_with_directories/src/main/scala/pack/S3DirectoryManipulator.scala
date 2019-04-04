@@ -19,9 +19,9 @@ object S3DirectoryManipulator {
    * @param folderName name of folder.
    */
   def createFolderIfNotExists(s3client: AmazonS3, bucketName: String, folderName: String): Unit = {
-    val folderRegex = ".+(/.+)+"
+    val folderRegex = ".+(/.+)*"
     if (!folderName.matches(folderRegex))
-      throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \".+(/.+)+\"")
+      throw new IllegalArgumentException("Bad folder name. Should be according to this regex: \".+(/.+)*\"")
 
     if (doesPathExist(s3client, bucketName, folderName)) return
 

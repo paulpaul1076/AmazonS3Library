@@ -1,6 +1,7 @@
 package pack
 
 import com.amazonaws.auth.{AWSStaticCredentialsProvider, AnonymousAWSCredentials}
+import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3ClientBuilder}
 import io.findify.s3mock.S3Mock
@@ -41,7 +42,7 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
     val folderName = "folder1"
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
-    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName + "/")
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName)
     val doesFolderExistInTheEnd = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
 
     Assert.assertTrue(!doesFolderExistInitially && doesFolderExistInTheEnd)
