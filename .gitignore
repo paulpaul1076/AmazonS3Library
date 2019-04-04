@@ -16,3 +16,8 @@ sbt__*.xml
 .idea/*
 */.idea/*
 *.iml
+copy-resources
+data
+out
+export
+output
