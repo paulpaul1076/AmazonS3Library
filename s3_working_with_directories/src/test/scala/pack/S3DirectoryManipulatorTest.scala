@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable
 
 /**
-  * Tests S3DirectoryManipulator.
+  * Tests S3DirectoryManipulator .
   */
 class S3DirectoryManipulatorTest extends JUnitSuite {
 
