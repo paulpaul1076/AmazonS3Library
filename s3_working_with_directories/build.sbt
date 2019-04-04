@@ -13,7 +13,7 @@ libraryDependencies += "org.apache.hadoop" % "hadoop-aws" % "2.7.1"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.7.4"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk-s3" % "1.11.294"
 libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "2.7.1"
-libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.2.0" // for ??? impl missing
+libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0" // for ??? impl missing
 
 libraryDependencies ++= Seq(
   "junit" % "junit" % "4.12" % Test,
