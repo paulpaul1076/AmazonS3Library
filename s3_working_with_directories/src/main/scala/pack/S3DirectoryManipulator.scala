@@ -15,7 +15,7 @@ object S3DirectoryManipulator {
     *
     * Important: folderName must end with "/" to create a folder instead of a file.
     *
-    * In the regex "[^/]" means any character but '/'.
+    * In the regex {{{"[^/]"}}} means any character but {{{'/'}}}.
     *
     * @param s3client   s3 client.
     * @param bucketName bucket name.
