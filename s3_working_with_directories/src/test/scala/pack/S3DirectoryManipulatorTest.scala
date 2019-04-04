@@ -1,7 +1,6 @@
 package pack
 
 import com.amazonaws.auth.{AWSStaticCredentialsProvider, AnonymousAWSCredentials}
-import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3ClientBuilder}
 import io.findify.s3mock.S3Mock
@@ -66,8 +65,8 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
     val oldName = "folder3"
     val newName = "folder4"
 
-    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, oldName + "/")
     val doesFolderExistInitially = S3DirectoryManipulator.doesPathExist(client, bucketName, oldName)
+    S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, oldName)
 
     S3DirectoryManipulator.renamePathsWithPrefix(client, bucketName, oldName, newName)
     val didItGetRenamed =
@@ -83,6 +82,8 @@ class S3DirectoryManipulatorTest extends JUnitSuite {
     S3DirectoryManipulator.createFolderIfNotExists(client, bucketName, folderName)
     val doesPathExist1 = client.listObjects(bucketName, folderName).getObjectSummaries.size() > 0
     val doesPathExist2 = S3DirectoryManipulator.doesPathExist(client, bucketName, folderName)
+    val doesPathNotExist = !S3DirectoryManipulator.doesPathExist(client, bucketName, "non-existent-dir")
     Assert.assertEquals(doesPathExist1, doesPathExist2)
+    Assert.assertTrue(doesPathNotExist)
   }
 }
